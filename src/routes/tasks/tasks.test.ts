@@ -3,7 +3,7 @@ import { testClient } from "hono/testing";
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import * as HttpStatusPhrases from "stoker/http-status-phrases";
-import { afterAll, beforeAll, describe, expect, expectTypeOf, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { ZodIssueCode } from "zod";
 
 import env from "@/env-runtime";
@@ -65,7 +65,6 @@ describe("tasks routes", () => {
     expect(response.status).toBe(200);
     if (response.status === 200) {
       const json = await response.json();
-      expectTypeOf(json).toBeArray();
       expect(json.length).toBe(1);
     }
   });
