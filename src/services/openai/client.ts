@@ -1,5 +1,6 @@
 import OpenAI from "openai";
-import { TriviaPrompt, TriviaResponse } from "./types";
+import { TriviaPrompt, TriviaResponse, TriviaResponseSchema } from "./types";
+import { zodResponseFormat } from "./zodUtils";
 
 export class OpenAIService {
   private client: OpenAI;
@@ -12,7 +13,7 @@ export class OpenAIService {
 
   async generateTrivia(prompt: TriviaPrompt): Promise<TriviaResponse> {
     const completion = await this.client.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
@@ -21,12 +22,13 @@ export class OpenAIService {
         },
         {
           role: "user",
-          content: `Generate a ${prompt.difficulty} trivia question about ${prompt.category}. Return it in JSON format with question, answer, options (array with 4 choices including the correct answer), and explanation fields.`,
+          content: `Generate a ${prompt.difficulty} trivia question about ${prompt.category}. Return it in JSON format with question, answer, explanation, and optionally tips (array of strings) fields.`,
         },
       ],
-      response_format: { type: "json_object" },
+      response_format: zodResponseFormat(TriviaResponseSchema, "trivia"),
     });
 
-    return JSON.parse(completion.choices[0].message.content!) as TriviaResponse;
+    const parsed = TriviaResponseSchema.parse(JSON.parse(completion.choices[0].message.content!));
+    return parsed;
   }
 }

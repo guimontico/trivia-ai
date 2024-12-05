@@ -25,7 +25,9 @@ export const create = createRoute({
   method: "post",
   request: {
     body: jsonContentRequired(
-      insertTriviaSchema,
+      insertTriviaSchema.extend({
+        difficulty: z.enum(["easy", "medium", "hard"]),
+      }),
       "The trivia question to create",
     ),
   },
@@ -36,7 +38,9 @@ export const create = createRoute({
       "The created trivia question",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(insertTriviaSchema),
+      createErrorSchema(insertTriviaSchema.extend({
+        difficulty: z.enum(["easy", "medium", "hard"]),
+      })),
       "The validation error(s)",
     ),
   },

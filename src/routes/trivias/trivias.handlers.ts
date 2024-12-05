@@ -8,6 +8,8 @@ import { createDb } from "@/db";
 import { trivia } from "@/db/schema";
 
 import type { CreateRoute, GetOneRoute, ListRoute, PatchRoute, RemoveRoute } from "./trivias.routes";
+import { OpenAIService } from "@/services/openai/client";
+
 
 export const list: AppRouteHandler<ListRoute> = async (c) => {
   const { db } = createDb(c.env);
@@ -17,7 +19,20 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
 
 export const create: AppRouteHandler<CreateRoute> = async (c) => {
   const { db } = createDb(c.env);
-  const triviaItem = c.req.valid("json");
+  const { category, difficulty } = c.req.valid("json");
+
+  const openAIService = new OpenAIService(c.env.OPENAI_API_KEY || "");
+  const generatedTrivia = await openAIService.generateTrivia({ category, difficulty });
+
+  const triviaItem = {
+    category,
+    difficulty,
+    question: generatedTrivia.question,
+    answer: generatedTrivia.answer,
+    explanation: generatedTrivia.explanation,
+    tips: generatedTrivia.tips || [],
+  };
+
   const [inserted] = await db.insert(trivia).values(triviaItem).returning();
   return c.json(inserted, HttpStatusCodes.OK);
 };
