@@ -3,47 +3,47 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema, IdParamsSchema } from "stoker/openapi/schemas";
 
-import { insertTasksSchema, patchTasksSchema, selectTasksSchema } from "@/db/schema";
+import { insertTriviaSchema, selectTriviaSchema } from "@/db/schema";
 import { notFoundSchema } from "@/lib/constants";
 
-const tags = ["Tasks"];
+const tags = ["Trivia"];
 
 export const list = createRoute({
-  path: "/tasks",
+  path: "/trivias",
   method: "get",
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      z.array(selectTasksSchema),
-      "The list of tasks",
+      z.array(selectTriviaSchema),
+      "The list of trivia questions",
     ),
   },
 });
 
 export const create = createRoute({
-  path: "/tasks",
+  path: "/trivias",
   method: "post",
   request: {
     body: jsonContentRequired(
-      insertTasksSchema,
-      "The task to create",
+      insertTriviaSchema,
+      "The trivia question to create",
     ),
   },
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      selectTasksSchema,
-      "The created task",
+      selectTriviaSchema,
+      "The created trivia question",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(insertTasksSchema),
+      createErrorSchema(insertTriviaSchema),
       "The validation error(s)",
     ),
   },
 });
 
 export const getOne = createRoute({
-  path: "/tasks/{id}",
+  path: "/trivias/{id}",
   method: "get",
   request: {
     params: IdParamsSchema,
@@ -51,13 +51,12 @@ export const getOne = createRoute({
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      selectTasksSchema,
-      "The requested task",
+      selectTriviaSchema,
+      "The trivia question",
     ),
-    [HttpStatusCodes.NOT_FOUND]: jsonContent(
-      notFoundSchema,
-      "Task not found",
-    ),
+    [HttpStatusCodes.NOT_FOUND]: {
+      description: "Trivia question not found",
+    },
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdParamsSchema),
       "Invalid id error",
@@ -66,27 +65,26 @@ export const getOne = createRoute({
 });
 
 export const patch = createRoute({
-  path: "/tasks/{id}",
+  path: "/trivias/{id}",
   method: "patch",
   request: {
     params: IdParamsSchema,
     body: jsonContentRequired(
-      patchTasksSchema,
-      "The task updates",
+      insertTriviaSchema.partial(),
+      "The trivia question updates",
     ),
   },
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      selectTasksSchema,
-      "The updated task",
+      selectTriviaSchema,
+      "The updated trivia question",
     ),
-    [HttpStatusCodes.NOT_FOUND]: jsonContent(
-      notFoundSchema,
-      "Task not found",
-    ),
+    [HttpStatusCodes.NOT_FOUND]: {
+      description: "Trivia question not found",
+    },
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(patchTasksSchema)
+      createErrorSchema(insertTriviaSchema.partial())
         .or(createErrorSchema(IdParamsSchema)),
       "The validation error(s)",
     ),
@@ -94,7 +92,7 @@ export const patch = createRoute({
 });
 
 export const remove = createRoute({
-  path: "/tasks/{id}",
+  path: "/trivias/{id}",
   method: "delete",
   request: {
     params: IdParamsSchema,
@@ -102,12 +100,11 @@ export const remove = createRoute({
   tags,
   responses: {
     [HttpStatusCodes.NO_CONTENT]: {
-      description: "Task deleted",
+      description: "Trivia question deleted",
     },
-    [HttpStatusCodes.NOT_FOUND]: jsonContent(
-      notFoundSchema,
-      "Task not found",
-    ),
+    [HttpStatusCodes.NOT_FOUND]: {
+      description: "Trivia question not found",
+    },
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdParamsSchema),
       "Invalid id error",

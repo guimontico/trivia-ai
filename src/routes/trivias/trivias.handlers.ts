@@ -5,34 +5,33 @@ import * as HttpStatusPhrases from "stoker/http-status-phrases";
 import type { AppRouteHandler } from "@/lib/types";
 
 import { createDb } from "@/db";
-import { tasks } from "@/db/schema";
-import { ZOD_ERROR_CODES, ZOD_ERROR_MESSAGES } from "@/lib/constants";
+import { trivia } from "@/db/schema";
 
 import type { CreateRoute, GetOneRoute, ListRoute, PatchRoute, RemoveRoute } from "./trivias.routes";
 
 export const list: AppRouteHandler<ListRoute> = async (c) => {
   const { db } = createDb(c.env);
-  const tasks = await db.query.tasks.findMany();
-  return c.json(tasks);
+  const trivias = await db.query.trivia.findMany();
+  return c.json(trivias);
 };
 
 export const create: AppRouteHandler<CreateRoute> = async (c) => {
   const { db } = createDb(c.env);
-  const task = c.req.valid("json");
-  const [inserted] = await db.insert(tasks).values(task).returning();
+  const triviaItem = c.req.valid("json");
+  const [inserted] = await db.insert(trivia).values(triviaItem).returning();
   return c.json(inserted, HttpStatusCodes.OK);
 };
 
 export const getOne: AppRouteHandler<GetOneRoute> = async (c) => {
   const { db } = createDb(c.env);
   const { id } = c.req.valid("param");
-  const task = await db.query.tasks.findFirst({
+  const triviaItem = await db.query.trivia.findFirst({
     where(fields, operators) {
       return operators.eq(fields.id, id);
     },
   });
 
-  if (!task) {
+  if (!triviaItem) {
     return c.json(
       {
         message: HttpStatusPhrases.NOT_FOUND,
@@ -41,7 +40,7 @@ export const getOne: AppRouteHandler<GetOneRoute> = async (c) => {
     );
   }
 
-  return c.json(task, HttpStatusCodes.OK);
+  return c.json(triviaItem, HttpStatusCodes.OK);
 };
 
 export const patch: AppRouteHandler<PatchRoute> = async (c) => {
@@ -49,31 +48,13 @@ export const patch: AppRouteHandler<PatchRoute> = async (c) => {
   const { id } = c.req.valid("param");
   const updates = c.req.valid("json");
 
-  if (Object.keys(updates).length === 0) {
-    return c.json(
-      {
-        success: false,
-        error: {
-          issues: [
-            {
-              code: ZOD_ERROR_CODES.INVALID_UPDATES,
-              path: [],
-              message: ZOD_ERROR_MESSAGES.NO_UPDATES,
-            },
-          ],
-          name: "ZodError",
-        },
-      },
-      HttpStatusCodes.UNPROCESSABLE_ENTITY,
-    );
-  }
+  const existing = await db.query.trivia.findFirst({
+    where(fields, operators) {
+      return operators.eq(fields.id, id);
+    },
+  });
 
-  const [task] = await db.update(tasks)
-    .set(updates)
-    .where(eq(tasks.id, id))
-    .returning();
-
-  if (!task) {
+  if (!existing) {
     return c.json(
       {
         message: HttpStatusPhrases.NOT_FOUND,
@@ -82,16 +63,25 @@ export const patch: AppRouteHandler<PatchRoute> = async (c) => {
     );
   }
 
-  return c.json(task, HttpStatusCodes.OK);
+  const [updated] = await db
+    .update(trivia)
+    .set(updates)
+    .where(eq(trivia.id, id))
+    .returning();
+
+  return c.json(updated, HttpStatusCodes.OK);
 };
 
 export const remove: AppRouteHandler<RemoveRoute> = async (c) => {
   const { db } = createDb(c.env);
   const { id } = c.req.valid("param");
-  const result = await db.delete(tasks)
-    .where(eq(tasks.id, id));
 
-  if (result.rowsAffected === 0) {
+  const [deleted] = await db
+    .delete(trivia)
+    .where(eq(trivia.id, id))
+    .returning();
+
+  if (!deleted) {
     return c.json(
       {
         message: HttpStatusPhrases.NOT_FOUND,
@@ -100,5 +90,5 @@ export const remove: AppRouteHandler<RemoveRoute> = async (c) => {
     );
   }
 
-  return c.body(null, HttpStatusCodes.NO_CONTENT);
+  return c.json(deleted, HttpStatusCodes.OK);
 };
