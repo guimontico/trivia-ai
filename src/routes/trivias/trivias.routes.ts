@@ -1,10 +1,10 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
-import { createErrorSchema, IdParamsSchema } from "stoker/openapi/schemas";
+import { IdParamsSchema } from "stoker/openapi/schemas";
 
 import { insertTriviaSchema, selectTriviaSchema } from "@/db/schema";
-import { notFoundSchema } from "@/lib/constants";
+import { createErrorSchema } from "@/lib/openapi";
 
 const tags = ["Trivia"];
 
@@ -27,8 +27,11 @@ export const create = createRoute({
     body: jsonContentRequired(
       insertTriviaSchema.extend({
         difficulty: z.enum(["easy", "medium", "hard"]),
+      }).pick({
+        category: true,
+        difficulty: true,
       }),
-      "The trivia question to create",
+      "The trivia question parameters",
     ),
   },
   tags,
@@ -40,6 +43,9 @@ export const create = createRoute({
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(insertTriviaSchema.extend({
         difficulty: z.enum(["easy", "medium", "hard"]),
+      }).pick({
+        category: true,
+        difficulty: true,
       })),
       "The validation error(s)",
     ),

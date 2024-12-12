@@ -1,6 +1,5 @@
 import OpenAI from "openai";
 import { TriviaPrompt, TriviaResponse, TriviaResponseSchema } from "./types";
-import { zodResponseFormat } from "./zodUtils";
 
 export class OpenAIService {
   private client: OpenAI;
@@ -18,14 +17,14 @@ export class OpenAIService {
         {
           role: "system",
           content:
-            "You are a trivia question generator. Generate a single trivia question based on the given category and difficulty.",
+            "You are a trivia question generator. Generate a single trivia question based on the given category and difficulty. The response must follow these rules:\n1. The answer must be exactly ONE word\n2. Provide between 10-20 tips in random order\n3. Each tip should start with 'Tip: ' and be concise\n4. Tips should help users guess the one-word answer",
         },
         {
           role: "user",
-          content: `Generate a ${prompt.difficulty} trivia question about ${prompt.category}. Return it in JSON format with question, answer, explanation, and optionally tips (array of strings) fields.`,
+          content: `Generate a ${prompt.difficulty} trivia question about ${prompt.category}. The answer must be ONE word. Return in JSON format with:\n- question (string)\n- answer (one-word string)\n- tips (array of strings, each starting with 'Tip: ')`,
         },
       ],
-      response_format: zodResponseFormat(TriviaResponseSchema, "trivia"),
+      response_format: { type: "json_object" },
     });
 
     const parsed = TriviaResponseSchema.parse(JSON.parse(completion.choices[0].message.content!));

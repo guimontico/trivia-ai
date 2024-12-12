@@ -29,7 +29,6 @@ export const create: AppRouteHandler<CreateRoute> = async (c) => {
     difficulty,
     question: generatedTrivia.question,
     answer: generatedTrivia.answer,
-    explanation: generatedTrivia.explanation,
     tips: generatedTrivia.tips || [],
   };
 

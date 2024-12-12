@@ -17,12 +17,18 @@ export const tasks = sqliteTable("tasks", {
     .$onUpdate(() => new Date()),
 });
 
-export const selectTasksSchema = createSelectSchema(tasks);
+export const selectTasksSchema = createSelectSchema(tasks).extend({
+  id: z.number().openapi({ type: "integer", description: "Task ID" }),
+  name: z.string().openapi({ type: "string", description: "Task name" }),
+  done: z.boolean().openapi({ type: "boolean", description: "Task completion status" }),
+  createdAt: z.date().openapi({ type: "string", format: "date-time", description: "Creation timestamp" }),
+  updatedAt: z.date().openapi({ type: "string", format: "date-time", description: "Last update timestamp" })
+});
 
 export const insertTasksSchema = createInsertSchema(
   tasks,
   {
-    name: schema => schema.name.min(1).max(500),
+    name: schema => schema.name.min(1).max(500).openapi({ type: "string", description: "Task name", minLength: 1, maxLength: 500 }),
   },
 ).required({
   done: true,
@@ -54,21 +60,30 @@ export const trivia = sqliteTable("trivia", {
     .$onUpdate(() => new Date()),
 });
 
-export const selectTriviaSchema = createSelectSchema(trivia);
+export const selectTriviaSchema = createSelectSchema(trivia).extend({
+  id: z.number().openapi({ type: "integer", description: "Trivia ID" }),
+  question: z.string().openapi({ type: "string", description: "Trivia question" }),
+  answer: z.string().openapi({ type: "string", description: "Trivia answer" }),
+  tips: z.array(z.string()).openapi({ 
+    type: "array", 
+    items: { type: "string" },
+    description: "Tips for the trivia"
+  }),
+  category: z.string().openapi({ type: "string", description: "Trivia category" }),
+  difficulty: z.string().openapi({ type: "string", description: "Trivia difficulty" }),
+  createdAt: z.date().openapi({ type: "string", format: "date-time", description: "Creation timestamp" }),
+  updatedAt: z.date().openapi({ type: "string", format: "date-time", description: "Last update timestamp" })
+});
 
 export const insertTriviaSchema = createInsertSchema(
   trivia,
   {
-    question: schema => schema.question.min(1).max(1000),
-    answer: schema => schema.answer.min(1).max(1000),
-    tips: () => z.array(z.string()).min(1),
-    category: schema => schema.category.min(1).max(100),
-    difficulty: schema => schema.difficulty.min(1).max(100),
-  },
-).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
+    category: schema => schema.category.min(1).max(100).openapi({ type: "string", description: "Trivia category", minLength: 1, maxLength: 100 }),
+    difficulty: schema => schema.difficulty.min(1).max(100).openapi({ type: "string", description: "Trivia difficulty", minLength: 1, maxLength: 100 }),
+  }
+).pick({
+  category: true,
+  difficulty: true,
 });
 
 export const patchTriviaSchema = insertTriviaSchema.partial();

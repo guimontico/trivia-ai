@@ -7,9 +7,10 @@ export const TriviaPromptSchema = z.object({
 
 export const TriviaResponseSchema = z.object({
   question: z.string(),
-  answer: z.string(),
-  explanation: z.string(),
-  tips: z.array(z.string()).optional(),
+  answer: z.string().refine((val) => val.trim().split(/\s+/).length === 1, {
+    message: "Answer must be exactly one word"
+  }),
+  tips: z.array(z.string()).length(20),
 });
 
 export type TriviaPrompt = z.infer<typeof TriviaPromptSchema>;
