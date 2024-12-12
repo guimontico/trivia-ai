@@ -18,11 +18,11 @@ export const tasks = sqliteTable("tasks", {
 });
 
 export const selectTasksSchema = createSelectSchema(tasks).extend({
-  id: z.number().openapi({ type: "integer", description: "Task ID" }),
-  name: z.string().openapi({ type: "string", description: "Task name" }),
-  done: z.boolean().openapi({ type: "boolean", description: "Task completion status" }),
-  createdAt: z.date().openapi({ type: "string", format: "date-time", description: "Creation timestamp" }),
-  updatedAt: z.date().openapi({ type: "string", format: "date-time", description: "Last update timestamp" })
+  id: z.number(),
+  name: z.string(),
+  done: z.boolean(),
+  createdAt: z.date(),
+  updatedAt: z.date()
 });
 
 export const insertTasksSchema = createInsertSchema(
@@ -61,18 +61,14 @@ export const trivia = sqliteTable("trivia", {
 });
 
 export const selectTriviaSchema = createSelectSchema(trivia).extend({
-  id: z.number().openapi({ type: "integer", description: "Trivia ID" }),
-  question: z.string().openapi({ type: "string", description: "Trivia question" }),
-  answer: z.string().openapi({ type: "string", description: "Trivia answer" }),
-  tips: z.array(z.string()).openapi({ 
-    type: "array", 
-    items: { type: "string" },
-    description: "Tips for the trivia"
-  }),
-  category: z.string().openapi({ type: "string", description: "Trivia category" }),
-  difficulty: z.string().openapi({ type: "string", description: "Trivia difficulty" }),
-  createdAt: z.date().openapi({ type: "string", format: "date-time", description: "Creation timestamp" }),
-  updatedAt: z.date().openapi({ type: "string", format: "date-time", description: "Last update timestamp" })
+  id: z.number(),
+  question: z.string(),
+  answer: z.string(),
+  tips: z.array(z.string()),
+  category: z.string(),
+  difficulty: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date()
 });
 
 export const insertTriviaSchema = createInsertSchema(

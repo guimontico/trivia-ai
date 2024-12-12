@@ -16267,7 +16267,7 @@ var require_promise_limit = __commonJS({
   }
 });
 
-// .wrangler/tmp/bundle-uV2hNf/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-cQiWNx/middleware-loader.entry.ts
 init_modules_watch_stub();
 init_virtual_unenv_global_polyfill_process();
 init_virtual_unenv_global_polyfill_performance();
@@ -16275,7 +16275,7 @@ init_virtual_unenv_global_polyfill_console();
 init_virtual_unenv_global_polyfill_set_immediate();
 init_virtual_unenv_global_polyfill_clear_immediate();
 
-// .wrangler/tmp/bundle-uV2hNf/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-cQiWNx/middleware-insertion-facade.js
 init_modules_watch_stub();
 init_virtual_unenv_global_polyfill_process();
 init_virtual_unenv_global_polyfill_performance();
@@ -35590,11 +35590,11 @@ var tasks = sqliteTable("tasks", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()).$onUpdate(() => /* @__PURE__ */ new Date())
 });
 var selectTasksSchema = b(tasks).extend({
-  id: z.number().openapi({ type: "integer", description: "Task ID" }),
-  name: z.string().openapi({ type: "string", description: "Task name" }),
-  done: z.boolean().openapi({ type: "boolean", description: "Task completion status" }),
-  createdAt: z.date().openapi({ type: "string", format: "date-time", description: "Creation timestamp" }),
-  updatedAt: z.date().openapi({ type: "string", format: "date-time", description: "Last update timestamp" })
+  id: z.number(),
+  name: z.string(),
+  done: z.boolean(),
+  createdAt: z.date(),
+  updatedAt: z.date()
 });
 var insertTasksSchema = c(
   tasks,
@@ -35620,18 +35620,14 @@ var trivia = sqliteTable("trivia", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()).$onUpdate(() => /* @__PURE__ */ new Date())
 });
 var selectTriviaSchema = b(trivia).extend({
-  id: z.number().openapi({ type: "integer", description: "Trivia ID" }),
-  question: z.string().openapi({ type: "string", description: "Trivia question" }),
-  answer: z.string().openapi({ type: "string", description: "Trivia answer" }),
-  tips: z.array(z.string()).openapi({
-    type: "array",
-    items: { type: "string" },
-    description: "Tips for the trivia"
-  }),
-  category: z.string().openapi({ type: "string", description: "Trivia category" }),
-  difficulty: z.string().openapi({ type: "string", description: "Trivia difficulty" }),
-  createdAt: z.date().openapi({ type: "string", format: "date-time", description: "Creation timestamp" }),
-  updatedAt: z.date().openapi({ type: "string", format: "date-time", description: "Last update timestamp" })
+  id: z.number(),
+  question: z.string(),
+  answer: z.string(),
+  tips: z.array(z.string()),
+  category: z.string(),
+  difficulty: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date()
 });
 var insertTriviaSchema = c(
   trivia,
@@ -41874,7 +41870,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env3, _ctx, middlewareCtx
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-uV2hNf/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-cQiWNx/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -41912,7 +41908,7 @@ function __facade_invoke__(request, env3, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-uV2hNf/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-cQiWNx/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
