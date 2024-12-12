@@ -4147,10 +4147,10 @@ function listenersController() {
     }
   };
 }
-function spliceOne(list5, index) {
-  for (; index + 1 < list5.length; index++)
-    list5[index] = list5[index + 1];
-  list5.pop();
+function spliceOne(list3, index) {
+  for (; index + 1 < list3.length; index++)
+    list3[index] = list3[index + 1];
+  list3.pop();
 }
 var defaultMaxListeners, AsyncIteratorPrototype, inspect, ERR_INVALID_THIS, ERR_UNHANDLED_ERROR, ERR_INVALID_ARG_TYPE2, AbortError, genericNodeError, kRejection, kCapture, kErrorMonitor, kShapeMode, kMaxEventTargetListeners, kEnhanceStackBeforeInspector, kWatermarkData, kEventEmitter, kAsyncResource, kFirstEventParam, kResistStopPropagation, kMaxEventTargetListenersWarned, __EventEmitter, _EventEmitter, EventEmitterAsyncResource, EventEmitterReferencingAsyncResource, on2, once2, addAbortListener, getEventListeners, getMaxListeners2, kSize, kMask, FixedCircularBuffer, FixedQueue;
 var init_events = __esm({
@@ -4405,10 +4405,10 @@ var init_events = __esm({
         const events = this._events;
         if (events === void 0)
           return this;
-        const list5 = events[type2];
-        if (list5 === void 0)
+        const list3 = events[type2];
+        if (list3 === void 0)
           return this;
-        if (list5 === listener || list5.listener === listener) {
+        if (list3 === listener || list3.listener === listener) {
           this._eventsCount -= 1;
           if (this[kShapeMode]) {
             events[type2] = void 0;
@@ -4417,12 +4417,12 @@ var init_events = __esm({
           } else {
             delete events[type2];
             if (events.removeListener)
-              this.emit("removeListener", type2, list5.listener || listener);
+              this.emit("removeListener", type2, list3.listener || listener);
           }
-        } else if (typeof list5 !== "function") {
+        } else if (typeof list3 !== "function") {
           let position = -1;
-          for (let i = list5.length - 1; i >= 0; i--) {
-            if (list5[i] === listener || list5[i].listener === listener) {
+          for (let i = list3.length - 1; i >= 0; i--) {
+            if (list3[i] === listener || list3[i].listener === listener) {
               position = i;
               break;
             }
@@ -4430,12 +4430,12 @@ var init_events = __esm({
           if (position < 0)
             return this;
           if (position === 0)
-            list5.shift();
+            list3.shift();
           else {
-            spliceOne(list5, position);
+            spliceOne(list3, position);
           }
-          if (list5.length === 1)
-            events[type2] = list5[0];
+          if (list3.length === 1)
+            events[type2] = list3[0];
           if (events.removeListener !== void 0)
             this.emit("removeListener", type2, listener);
         }
@@ -12124,22 +12124,22 @@ var require_split2 = __commonJS({
     var kLast = Symbol("last");
     var kDecoder = Symbol("decoder");
     function transform(chunk, enc, cb) {
-      let list5;
+      let list3;
       if (this.overflow) {
         const buf = this[kDecoder].write(chunk);
-        list5 = buf.split(this.matcher);
-        if (list5.length === 1)
+        list3 = buf.split(this.matcher);
+        if (list3.length === 1)
           return cb();
-        list5.shift();
+        list3.shift();
         this.overflow = false;
       } else {
         this[kLast] += this[kDecoder].write(chunk);
-        list5 = this[kLast].split(this.matcher);
+        list3 = this[kLast].split(this.matcher);
       }
-      this[kLast] = list5.pop();
-      for (let i = 0; i < list5.length; i++) {
+      this[kLast] = list3.pop();
+      for (let i = 0; i < list3.length; i++) {
         try {
-          push2(this, this.mapper(list5[i]));
+          push2(this, this.mapper(list3[i]));
         } catch (error3) {
           return cb(error3);
         }
@@ -14292,7 +14292,7 @@ var require_cjs = __commonJS({
     init_virtual_unenv_global_polyfill_clear_immediate();
     Object.defineProperty(exports, "__esModule", { value: true });
     var toStringFunction = Function.prototype.toString;
-    var create5 = Object.create;
+    var create3 = Object.create;
     var toStringObject = Object.prototype.toString;
     var LegacyCache = (
       /** @class */
@@ -14326,11 +14326,11 @@ var require_cjs = __commonJS({
     var createCache = typeof WeakMap !== "undefined" ? createCacheModern : createCacheLegacy;
     function getCleanClone(prototype) {
       if (!prototype) {
-        return create5(null);
+        return create3(null);
       }
       var Constructor = prototype.constructor;
       if (Constructor === Object) {
-        return prototype === Object.prototype ? {} : create5(prototype);
+        return prototype === Object.prototype ? {} : create3(prototype);
       }
       if (Constructor && ~toStringFunction.call(Constructor).indexOf("[native code]")) {
         try {
@@ -14338,7 +14338,7 @@ var require_cjs = __commonJS({
         } catch (_a115) {
         }
       }
-      return create5(prototype);
+      return create3(prototype);
     }
     __name(getCleanClone, "getCleanClone");
     function getRegExpFlagsLegacy(regExp) {
@@ -16185,13 +16185,13 @@ var require_promise_limit = __commonJS({
     function limiter(count3) {
       var outstanding = 0;
       var jobs = [];
-      function remove5() {
+      function remove3() {
         outstanding--;
         if (outstanding < count3) {
           dequeue();
         }
       }
-      __name(remove5, "remove");
+      __name(remove3, "remove");
       function dequeue() {
         var job = jobs.shift();
         semaphore.queue = jobs.length;
@@ -16211,14 +16211,14 @@ var require_promise_limit = __commonJS({
         outstanding++;
         try {
           return Promise.resolve(fn2()).then(function(result) {
-            remove5();
+            remove3();
             return result;
           }, function(error3) {
-            remove5();
+            remove3();
             throw error3;
           });
         } catch (err) {
-          remove5();
+          remove3();
           return Promise.reject(err);
         }
       }
@@ -16267,7 +16267,7 @@ var require_promise_limit = __commonJS({
   }
 });
 
-// .wrangler/tmp/bundle-cQiWNx/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-64hefy/middleware-loader.entry.ts
 init_modules_watch_stub();
 init_virtual_unenv_global_polyfill_process();
 init_virtual_unenv_global_polyfill_performance();
@@ -16275,7 +16275,7 @@ init_virtual_unenv_global_polyfill_console();
 init_virtual_unenv_global_polyfill_set_immediate();
 init_virtual_unenv_global_polyfill_clear_immediate();
 
-// .wrangler/tmp/bundle-cQiWNx/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-64hefy/middleware-insertion-facade.js
 init_modules_watch_stub();
 init_virtual_unenv_global_polyfill_process();
 init_virtual_unenv_global_polyfill_performance();
@@ -19713,20 +19713,20 @@ var SmartRouter = /* @__PURE__ */ __name(class {
     let i = 0;
     let res;
     for (; i < len; i++) {
-      const router4 = routers[i];
+      const router3 = routers[i];
       try {
         for (let i2 = 0, len2 = routes2.length; i2 < len2; i2++) {
-          router4.add(...routes2[i2]);
+          router3.add(...routes2[i2]);
         }
-        res = router4.match(method, path2);
+        res = router3.match(method, path2);
       } catch (e) {
         if (e instanceof UnsupportedPathError) {
           continue;
         }
         throw e;
       }
-      this.match = router4.match.bind(router4);
-      this.#routers = [router4];
+      this.match = router3.match.bind(router3);
+      this.#routers = [router3];
       this.#routes = void 0;
       break;
     }
@@ -24320,39 +24320,6 @@ init_virtual_unenv_global_polyfill_console();
 init_virtual_unenv_global_polyfill_set_immediate();
 init_virtual_unenv_global_polyfill_clear_immediate();
 
-// node_modules/stoker/dist/esm/openapi/schemas/create-error-schema.js
-init_modules_watch_stub();
-init_virtual_unenv_global_polyfill_process();
-init_virtual_unenv_global_polyfill_performance();
-init_virtual_unenv_global_polyfill_console();
-init_virtual_unenv_global_polyfill_set_immediate();
-init_virtual_unenv_global_polyfill_clear_immediate();
-var createErrorSchema = /* @__PURE__ */ __name((schema) => {
-  const { error: error3 } = schema.safeParse(
-    schema._def.typeName === z.ZodFirstPartyTypeKind.ZodArray ? [] : {}
-  );
-  return z.object({
-    success: z.boolean().openapi({
-      example: false
-    }),
-    error: z.object({
-      issues: z.array(
-        z.object({
-          code: z.string(),
-          path: z.array(
-            z.union([z.string(), z.number()])
-          ),
-          message: z.string().optional()
-        })
-      ),
-      name: z.string()
-    }).openapi({
-      example: error3
-    })
-  });
-}, "createErrorSchema");
-var create_error_schema_default = createErrorSchema;
-
 // node_modules/stoker/dist/esm/openapi/schemas/create-message-object.js
 init_modules_watch_stub();
 init_virtual_unenv_global_polyfill_process();
@@ -24714,7 +24681,7 @@ var router = createRouter().openapi(
 );
 var index_route_default = router;
 
-// src/routes/tasks/tasks.index.ts
+// src/routes/trivia/trivia.index.ts
 init_modules_watch_stub();
 init_virtual_unenv_global_polyfill_process();
 init_virtual_unenv_global_polyfill_performance();
@@ -24722,7 +24689,7 @@ init_virtual_unenv_global_polyfill_console();
 init_virtual_unenv_global_polyfill_set_immediate();
 init_virtual_unenv_global_polyfill_clear_immediate();
 
-// src/routes/tasks/tasks.handlers.ts
+// src/routes/trivia/trivia.handlers.ts
 init_modules_watch_stub();
 init_virtual_unenv_global_polyfill_process();
 init_virtual_unenv_global_polyfill_performance();
@@ -25918,8 +25885,8 @@ __name(sql, "sql");
   }
   __name(empty, "empty");
   sql2.empty = empty;
-  function fromList(list5) {
-    return new SQL(list5);
+  function fromList(list3) {
+    return new SQL(list3);
   }
   __name(fromList, "fromList");
   sql2.fromList = fromList;
@@ -35050,13 +35017,9 @@ __name(drizzle, "drizzle");
 // src/db/schema.ts
 var schema_exports = {};
 __export(schema_exports, {
-  insertTasksSchema: () => insertTasksSchema,
   insertTriviaSchema: () => insertTriviaSchema,
-  patchTasksSchema: () => patchTasksSchema,
   patchTriviaSchema: () => patchTriviaSchema,
-  selectTasksSchema: () => selectTasksSchema,
   selectTriviaSchema: () => selectTriviaSchema,
-  tasks: () => tasks,
   trivia: () => trivia
 });
 init_modules_watch_stub();
@@ -35582,33 +35545,6 @@ function p(e) {
 __name(p, "p");
 
 // src/db/schema.ts
-var tasks = sqliteTable("tasks", {
-  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-  name: text("name").notNull(),
-  done: integer("done", { mode: "boolean" }).notNull().default(false),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()).$onUpdate(() => /* @__PURE__ */ new Date())
-});
-var selectTasksSchema = b(tasks).extend({
-  id: z.number(),
-  name: z.string(),
-  done: z.boolean(),
-  createdAt: z.date(),
-  updatedAt: z.date()
-});
-var insertTasksSchema = c(
-  tasks,
-  {
-    name: (schema) => schema.name.min(1).max(500).openapi({ type: "string", description: "Task name", minLength: 1, maxLength: 500 })
-  }
-).required({
-  done: true
-}).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true
-});
-var patchTasksSchema = insertTasksSchema.partial();
 var trivia = sqliteTable("trivia", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   question: text("question").notNull(),
@@ -35653,231 +35589,6 @@ function createDb(env3) {
   return { db, client };
 }
 __name(createDb, "createDb");
-
-// src/lib/constants.ts
-init_modules_watch_stub();
-init_virtual_unenv_global_polyfill_process();
-init_virtual_unenv_global_polyfill_performance();
-init_virtual_unenv_global_polyfill_console();
-init_virtual_unenv_global_polyfill_set_immediate();
-init_virtual_unenv_global_polyfill_clear_immediate();
-var ZOD_ERROR_MESSAGES = {
-  REQUIRED: "Required",
-  EXPECTED_NUMBER: "Expected number, received nan",
-  NO_UPDATES: "No updates provided"
-};
-var ZOD_ERROR_CODES = {
-  INVALID_UPDATES: "invalid_updates"
-};
-var notFoundSchema = create_message_object_default(NOT_FOUND2);
-
-// src/routes/tasks/tasks.handlers.ts
-var list = /* @__PURE__ */ __name(async (c2) => {
-  const { db } = createDb(c2.env);
-  const tasks2 = await db.query.tasks.findMany();
-  return c2.json(tasks2);
-}, "list");
-var create = /* @__PURE__ */ __name(async (c2) => {
-  const { db } = createDb(c2.env);
-  const task = c2.req.valid("json");
-  const [inserted] = await db.insert(tasks).values(task).returning();
-  return c2.json(inserted, OK2);
-}, "create");
-var getOne = /* @__PURE__ */ __name(async (c2) => {
-  const { db } = createDb(c2.env);
-  const { id } = c2.req.valid("param");
-  const task = await db.query.tasks.findFirst({
-    where(fields, operators) {
-      return operators.eq(fields.id, id);
-    }
-  });
-  if (!task) {
-    return c2.json(
-      {
-        message: NOT_FOUND2
-      },
-      NOT_FOUND
-    );
-  }
-  return c2.json(task, OK2);
-}, "getOne");
-var patch = /* @__PURE__ */ __name(async (c2) => {
-  const { db } = createDb(c2.env);
-  const { id } = c2.req.valid("param");
-  const updates = c2.req.valid("json");
-  if (Object.keys(updates).length === 0) {
-    return c2.json(
-      {
-        success: false,
-        error: {
-          issues: [
-            {
-              code: ZOD_ERROR_CODES.INVALID_UPDATES,
-              path: [],
-              message: ZOD_ERROR_MESSAGES.NO_UPDATES
-            }
-          ],
-          name: "ZodError"
-        }
-      },
-      UNPROCESSABLE_ENTITY
-    );
-  }
-  const [task] = await db.update(tasks).set(updates).where(eq(tasks.id, id)).returning();
-  if (!task) {
-    return c2.json(
-      {
-        message: NOT_FOUND2
-      },
-      NOT_FOUND
-    );
-  }
-  return c2.json(task, OK2);
-}, "patch");
-var remove = /* @__PURE__ */ __name(async (c2) => {
-  const { db } = createDb(c2.env);
-  const { id } = c2.req.valid("param");
-  const result = await db.delete(tasks).where(eq(tasks.id, id));
-  if (result.rowsAffected === 0) {
-    return c2.json(
-      {
-        message: NOT_FOUND2
-      },
-      NOT_FOUND
-    );
-  }
-  return c2.body(null, NO_CONTENT);
-}, "remove");
-
-// src/routes/tasks/tasks.routes.ts
-init_modules_watch_stub();
-init_virtual_unenv_global_polyfill_process();
-init_virtual_unenv_global_polyfill_performance();
-init_virtual_unenv_global_polyfill_console();
-init_virtual_unenv_global_polyfill_set_immediate();
-init_virtual_unenv_global_polyfill_clear_immediate();
-var tags = ["Tasks"];
-var list2 = createRoute({
-  path: "/tasks",
-  method: "get",
-  tags,
-  responses: {
-    [OK2]: json_content_default(
-      z.array(selectTasksSchema),
-      "The list of tasks"
-    )
-  }
-});
-var create2 = createRoute({
-  path: "/tasks",
-  method: "post",
-  request: {
-    body: json_content_required_default(
-      insertTasksSchema,
-      "The task to create"
-    )
-  },
-  tags,
-  responses: {
-    [OK2]: json_content_default(
-      selectTasksSchema,
-      "The created task"
-    ),
-    [UNPROCESSABLE_ENTITY]: json_content_default(
-      create_error_schema_default(insertTasksSchema),
-      "The validation error(s)"
-    )
-  }
-});
-var getOne2 = createRoute({
-  path: "/tasks/{id}",
-  method: "get",
-  request: {
-    params: id_params_default
-  },
-  tags,
-  responses: {
-    [OK2]: json_content_default(
-      selectTasksSchema,
-      "The requested task"
-    ),
-    [NOT_FOUND]: json_content_default(
-      notFoundSchema,
-      "Task not found"
-    ),
-    [UNPROCESSABLE_ENTITY]: json_content_default(
-      create_error_schema_default(id_params_default),
-      "Invalid id error"
-    )
-  }
-});
-var patch2 = createRoute({
-  path: "/tasks/{id}",
-  method: "patch",
-  request: {
-    params: id_params_default,
-    body: json_content_required_default(
-      patchTasksSchema,
-      "The task updates"
-    )
-  },
-  tags,
-  responses: {
-    [OK2]: json_content_default(
-      selectTasksSchema,
-      "The updated task"
-    ),
-    [NOT_FOUND]: json_content_default(
-      notFoundSchema,
-      "Task not found"
-    ),
-    [UNPROCESSABLE_ENTITY]: json_content_default(
-      create_error_schema_default(patchTasksSchema).or(create_error_schema_default(id_params_default)),
-      "The validation error(s)"
-    )
-  }
-});
-var remove2 = createRoute({
-  path: "/tasks/{id}",
-  method: "delete",
-  request: {
-    params: id_params_default
-  },
-  tags,
-  responses: {
-    [NO_CONTENT]: {
-      description: "Task deleted"
-    },
-    [NOT_FOUND]: json_content_default(
-      notFoundSchema,
-      "Task not found"
-    ),
-    [UNPROCESSABLE_ENTITY]: json_content_default(
-      create_error_schema_default(id_params_default),
-      "Invalid id error"
-    )
-  }
-});
-
-// src/routes/tasks/tasks.index.ts
-var router2 = createRouter().openapi(list2, list).openapi(create2, create).openapi(getOne2, getOne).openapi(patch2, patch).openapi(remove2, remove);
-var tasks_index_default = router2;
-
-// src/routes/trivias/trivias.index.ts
-init_modules_watch_stub();
-init_virtual_unenv_global_polyfill_process();
-init_virtual_unenv_global_polyfill_performance();
-init_virtual_unenv_global_polyfill_console();
-init_virtual_unenv_global_polyfill_set_immediate();
-init_virtual_unenv_global_polyfill_clear_immediate();
-
-// src/routes/trivias/trivias.handlers.ts
-init_modules_watch_stub();
-init_virtual_unenv_global_polyfill_process();
-init_virtual_unenv_global_polyfill_performance();
-init_virtual_unenv_global_polyfill_console();
-init_virtual_unenv_global_polyfill_set_immediate();
-init_virtual_unenv_global_polyfill_clear_immediate();
 
 // src/services/openai/client.ts
 init_modules_watch_stub();
@@ -37681,8 +37392,8 @@ function getBrowserInfo() {
     if (match) {
       const major = match[1] || 0;
       const minor = match[2] || 0;
-      const patch5 = match[3] || 0;
-      return { browser: key, version: `${major}.${minor}.${patch5}` };
+      const patch3 = match[3] || 0;
+      return { browser: key, version: `${major}.${minor}.${patch3}` };
     }
   }
   return null;
@@ -41545,13 +41256,13 @@ var OpenAIService = class {
 };
 __name(OpenAIService, "OpenAIService");
 
-// src/routes/trivias/trivias.handlers.ts
-var list3 = /* @__PURE__ */ __name(async (c2) => {
+// src/routes/trivia/trivia.handlers.ts
+var list = /* @__PURE__ */ __name(async (c2) => {
   const { db } = createDb(c2.env);
-  const trivias = await db.query.trivia.findMany();
-  return c2.json(trivias);
+  const trivia2 = await db.query.trivia.findMany();
+  return c2.json(trivia2);
 }, "list");
-var create3 = /* @__PURE__ */ __name(async (c2) => {
+var create = /* @__PURE__ */ __name(async (c2) => {
   const { db } = createDb(c2.env);
   const { category, difficulty } = c2.req.valid("json");
   const openAIService = new OpenAIService(c2.env.OPENAI_API_KEY || "");
@@ -41566,7 +41277,7 @@ var create3 = /* @__PURE__ */ __name(async (c2) => {
   const [inserted] = await db.insert(trivia).values(triviaItem).returning();
   return c2.json(inserted, OK2);
 }, "create");
-var getOne3 = /* @__PURE__ */ __name(async (c2) => {
+var getOne = /* @__PURE__ */ __name(async (c2) => {
   const { db } = createDb(c2.env);
   const { id } = c2.req.valid("param");
   const triviaItem = await db.query.trivia.findFirst({
@@ -41584,7 +41295,7 @@ var getOne3 = /* @__PURE__ */ __name(async (c2) => {
   }
   return c2.json(triviaItem, OK2);
 }, "getOne");
-var patch3 = /* @__PURE__ */ __name(async (c2) => {
+var patch = /* @__PURE__ */ __name(async (c2) => {
   const { db } = createDb(c2.env);
   const { id } = c2.req.valid("param");
   const updates = c2.req.valid("json");
@@ -41604,7 +41315,7 @@ var patch3 = /* @__PURE__ */ __name(async (c2) => {
   const [updated] = await db.update(trivia).set(updates).where(eq(trivia.id, id)).returning();
   return c2.json(updated, OK2);
 }, "patch");
-var remove3 = /* @__PURE__ */ __name(async (c2) => {
+var remove = /* @__PURE__ */ __name(async (c2) => {
   const { db } = createDb(c2.env);
   const { id } = c2.req.valid("param");
   const [deleted] = await db.delete(trivia).where(eq(trivia.id, id)).returning();
@@ -41619,7 +41330,7 @@ var remove3 = /* @__PURE__ */ __name(async (c2) => {
   return c2.json(deleted, OK2);
 }, "remove");
 
-// src/routes/trivias/trivias.routes.ts
+// src/routes/trivia/trivia.routes.ts
 init_modules_watch_stub();
 init_virtual_unenv_global_polyfill_process();
 init_virtual_unenv_global_polyfill_performance();
@@ -41634,7 +41345,7 @@ init_virtual_unenv_global_polyfill_performance();
 init_virtual_unenv_global_polyfill_console();
 init_virtual_unenv_global_polyfill_set_immediate();
 init_virtual_unenv_global_polyfill_clear_immediate();
-function createErrorSchema2(schema) {
+function createErrorSchema(schema) {
   return z.object({
     message: z.string(),
     code: z.string().optional(),
@@ -41687,14 +41398,14 @@ function createErrorSchema2(schema) {
     }
   });
 }
-__name(createErrorSchema2, "createErrorSchema");
+__name(createErrorSchema, "createErrorSchema");
 
-// src/routes/trivias/trivias.routes.ts
-var tags2 = ["Trivia"];
-var list4 = createRoute({
-  path: "/trivias",
+// src/routes/trivia/trivia.routes.ts
+var tags = ["Trivia"];
+var list2 = createRoute({
+  path: "/trivia",
   method: "get",
-  tags: tags2,
+  tags,
   responses: {
     [OK2]: json_content_default(
       z.array(selectTriviaSchema),
@@ -41702,8 +41413,8 @@ var list4 = createRoute({
     )
   }
 });
-var create4 = createRoute({
-  path: "/trivias",
+var create2 = createRoute({
+  path: "/trivia",
   method: "post",
   request: {
     body: json_content_required_default(
@@ -41716,14 +41427,14 @@ var create4 = createRoute({
       "The trivia question parameters"
     )
   },
-  tags: tags2,
+  tags,
   responses: {
     [OK2]: json_content_default(
       selectTriviaSchema,
       "The created trivia question"
     ),
     [UNPROCESSABLE_ENTITY]: json_content_default(
-      createErrorSchema2(insertTriviaSchema.extend({
+      createErrorSchema(insertTriviaSchema.extend({
         difficulty: z.enum(["easy", "medium", "hard"])
       }).pick({
         category: true,
@@ -41733,13 +41444,13 @@ var create4 = createRoute({
     )
   }
 });
-var getOne4 = createRoute({
-  path: "/trivias/{id}",
+var getOne2 = createRoute({
+  path: "/trivia/{id}",
   method: "get",
   request: {
     params: id_params_default
   },
-  tags: tags2,
+  tags,
   responses: {
     [OK2]: json_content_default(
       selectTriviaSchema,
@@ -41749,13 +41460,13 @@ var getOne4 = createRoute({
       description: "Trivia question not found"
     },
     [UNPROCESSABLE_ENTITY]: json_content_default(
-      createErrorSchema2(id_params_default),
+      createErrorSchema(id_params_default),
       "Invalid id error"
     )
   }
 });
-var patch4 = createRoute({
-  path: "/trivias/{id}",
+var patch2 = createRoute({
+  path: "/trivia/{id}",
   method: "patch",
   request: {
     params: id_params_default,
@@ -41764,7 +41475,7 @@ var patch4 = createRoute({
       "The trivia question updates"
     )
   },
-  tags: tags2,
+  tags,
   responses: {
     [OK2]: json_content_default(
       selectTriviaSchema,
@@ -41774,18 +41485,18 @@ var patch4 = createRoute({
       description: "Trivia question not found"
     },
     [UNPROCESSABLE_ENTITY]: json_content_default(
-      createErrorSchema2(insertTriviaSchema.partial()).or(createErrorSchema2(id_params_default)),
+      createErrorSchema(insertTriviaSchema.partial()).or(createErrorSchema(id_params_default)),
       "The validation error(s)"
     )
   }
 });
-var remove4 = createRoute({
-  path: "/trivias/{id}",
+var remove2 = createRoute({
+  path: "/trivia/{id}",
   method: "delete",
   request: {
     params: id_params_default
   },
-  tags: tags2,
+  tags,
   responses: {
     [NO_CONTENT]: {
       description: "Trivia question deleted"
@@ -41794,23 +41505,22 @@ var remove4 = createRoute({
       description: "Trivia question not found"
     },
     [UNPROCESSABLE_ENTITY]: json_content_default(
-      createErrorSchema2(id_params_default),
+      createErrorSchema(id_params_default),
       "Invalid id error"
     )
   }
 });
 
-// src/routes/trivias/trivias.index.ts
-var router3 = createRouter().openapi(list4, list3).openapi(create4, create3).openapi(getOne4, getOne3).openapi(patch4, patch3).openapi(remove4, remove3);
-var trivias_index_default = router3;
+// src/routes/trivia/trivia.index.ts
+var router2 = createRouter().openapi(list2, list).openapi(create2, create).openapi(getOne2, getOne).openapi(patch2, patch).openapi(remove2, remove);
+var trivia_index_default = router2;
 
 // src/app.ts
 var app = createApp();
 configureOpenAPI(app);
 var routes = [
   index_route_default,
-  tasks_index_default,
-  trivias_index_default
+  trivia_index_default
 ];
 routes.forEach((route) => {
   app.route("/", route);
@@ -41870,7 +41580,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env3, _ctx, middlewareCtx
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-cQiWNx/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-64hefy/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -41908,7 +41618,7 @@ function __facade_invoke__(request, env3, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-cQiWNx/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-64hefy/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

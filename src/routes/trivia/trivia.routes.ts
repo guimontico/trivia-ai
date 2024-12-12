@@ -9,7 +9,7 @@ import { createErrorSchema } from "@/lib/openapi";
 const tags = ["Trivia"];
 
 export const list = createRoute({
-  path: "/trivias",
+  path: "/trivia",
   method: "get",
   tags,
   responses: {
@@ -21,7 +21,7 @@ export const list = createRoute({
 });
 
 export const create = createRoute({
-  path: "/trivias",
+  path: "/trivia",
   method: "post",
   request: {
     body: jsonContentRequired(
@@ -53,7 +53,7 @@ export const create = createRoute({
 });
 
 export const getOne = createRoute({
-  path: "/trivias/{id}",
+  path: "/trivia/{id}",
   method: "get",
   request: {
     params: IdParamsSchema,
@@ -75,7 +75,7 @@ export const getOne = createRoute({
 });
 
 export const patch = createRoute({
-  path: "/trivias/{id}",
+  path: "/trivia/{id}",
   method: "patch",
   request: {
     params: IdParamsSchema,
@@ -102,7 +102,7 @@ export const patch = createRoute({
 });
 
 export const remove = createRoute({
-  path: "/trivias/{id}",
+  path: "/trivia/{id}",
   method: "delete",
   request: {
     params: IdParamsSchema,

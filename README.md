@@ -71,26 +71,26 @@ Base hono app exported from [app.ts](./src/app.ts). Local development uses [@hon
 
 Typesafe env defined in [env.ts](./src/env.ts) - add any other required environment variables here. The application will not start if any required environment variables are missing
 
-See [src/routes/tasks](./src/routes/tasks/) for an example Open API group. Copy this folder / use as an example for your route groups.
+See [src/routes/trivia](./src/routes/trivia/) for an example Open API group. Copy this folder / use as an example for your route groups.
 
-- Router created in [tasks.index.ts](./src/routes/tasks/tasks.index.ts)
-- Route definitions defined in [tasks.routes.ts](./src/routes/tasks/tasks.routes.ts)
-- Hono request handlers defined in [tasks.handlers.ts](./src/routes/tasks/tasks.handlers.ts)
-- Group unit tests defined in [tasks.test.ts](./src/routes/tasks/tasks.test.ts)
+- Router created in [trivia.index.ts](./src/routes/trivia/trivia.index.ts)
+- Route definitions defined in [trivia.routes.ts](./src/routes/trivia/trivia.routes.ts)
+- Hono request handlers defined in [trivia.handlers.ts](./src/routes/trivia/trivia.handlers.ts)
+- Group unit tests defined in [trivia.test.ts](./src/routes/trivia/trivia.test.ts)
 
 All app routes are grouped together and exported into single type as `AppType` in [app.ts](./src/app.ts) for use in [RPC / hono/client](https://hono.dev/docs/guides/rpc).
 
 ## Endpoints
 
-| Path               | Description              |
-| ------------------ | ------------------------ |
-| GET /doc           | Open API Specification   |
-| GET /reference     | Scalar API Documentation |
-| GET /tasks         | List all tasks           |
-| POST /tasks        | Create a task            |
-| GET /tasks/{id}    | Get one task by id       |
-| PATCH /tasks/{id}  | Patch one task by id     |
-| DELETE /tasks/{id} | Delete one task by id    |
+| Path                | Description              |
+| ------------------- | ------------------------ |
+| GET /doc            | Open API Specification   |
+| GET /reference      | Scalar API Documentation |
+| GET /trivia         | List all trivia          |
+| POST /trivia        | Create a trivia          |
+| GET /trivia/{id}    | Get one trivia by id     |
+| PATCH /trivia/{id}  | Patch one trivia by id   |
+| DELETE /trivia/{id} | Delete one trivia by id  |
 
 ## References
 
